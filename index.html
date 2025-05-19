@@ -99,30 +99,24 @@
   </div>
 
   <script>
-    const form = document.getElementById("grievanceForm");
-    const success = document.getElementById("successMessage");
-    const slider = document.getElementById("severity");
-    const sliderValue = document.querySelector(".slider-value");
+   const form = document.getElementById("grievanceForm");
+const success = document.getElementById("successMessage");
+const slider = document.getElementById("severity");
+const sliderValue = document.querySelector(".slider-value");
 
-    slider.addEventListener("input", () => {
-      sliderValue.textContent = `${slider.value} / 10`;
-    });
+slider.addEventListener("input", () => {
+  sliderValue.textContent = `${slider.value} / 10`;
+});
 
-    form.addEventListener("submit", (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-  
-  fetch("https://script.google.com/macros/s/AKfycbx15VstjzJ6DpOqrZQ8A5a56uHvaR3QYeDQQv0n_Olwbi4OgJX3DHjKWqj_q1Ir-5g/exec", {
+
+  const formData = new FormData(form);  // Create FormData from the form
+
+  fetch("https://script.google.com/macros/s/AKfycbwDeYlY3M_LalyOTtOPTgV2HcteRlnOdo8BHhUJUNZjDrdfjJa6JF59AyheozS8pmwJ/exec", {
     method: "POST",
-    mode: "no-cors", // Must use this to bypass CORS
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      mood: document.getElementById("mood").value,
-      complaint: document.getElementById("complaint").value,
-      severity: document.getElementById("severity").value,
-      solution: document.getElementById("solution").value
-    })
+    mode: "no-cors",  // Keep no-cors to avoid CORS blocking (response won't be readable though)
+    body: formData    // Send form data, NOT JSON
   });
 
   // Show success message assuming it worked
