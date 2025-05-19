@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,35 +97,39 @@
     </div>
   </div>
 
-  <script>
-   const form = document.getElementById("grievanceForm");
-const success = document.getElementById("successMessage");
-const slider = document.getElementById("severity");
-const sliderValue = document.querySelector(".slider-value");
+ <script>
+  const form = document.getElementById("grievanceForm");
+  const success = document.getElementById("successMessage");
+  const slider = document.getElementById("severity");
+  const sliderValue = document.querySelector(".slider-value");
 
-slider.addEventListener("input", () => {
-  sliderValue.textContent = `${slider.value} / 10`;
-});
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(form);
-
-  fetch("https://script.google.com/macros/s/AKfycbwduNA4wxKyZZLC21zYQyq8q9bynjVF7LlYiJT1zUDwGoffOkX2Lyo11f_s4tteBF0p/exec", {
-    method: "POST",
-    body: formData,
-  }).then(() => {
-    form.reset();
-    sliderValue.textContent = "5 / 10";
-    success.style.display = "block";
-    setTimeout(() => {
-      success.style.display = "none";
-    }, 5000);
-  }).catch((error) => {
-    alert("Oops! Something went wrong.");
-    console.error(error);
+  slider.addEventListener("input", () => {
+    sliderValue.textContent = `${slider.value} / 10`;
   });
-  </script>
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("https://script.google.com/macros/s/AKfycbwduNA4wxKyZZLC21zYQyq8q9bynjVF7LlYiJT1zUDwGoffOkX2Lyo11f_s4tteBF0p/exec", {
+      method: "POST",
+      body: formData,
+    })
+    .then(() => {
+      form.reset();
+      sliderValue.textContent = "5 / 10";
+      success.style.display = "block";
+      setTimeout(() => {
+        success.style.display = "none";
+      }, 5000);
+    })
+    .catch((error) => {
+      alert("Oops! Something went wrong.");
+      console.error(error);
+    });
+  });
+</script>
+
 </body>
 </html>
