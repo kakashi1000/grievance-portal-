@@ -22,7 +22,7 @@
       width: 90%;
       max-width: 400px;
       box-sizing: border-box;
-}
+    }
     h1 {
       font-size: 1.5rem;
       margin-bottom: 1rem;
@@ -70,7 +70,7 @@
     <h1>Hello Ms. Snorlex 👋</h1>
     <form id="grievanceForm">
       <label for="mood">Mood</label>
-      <select id="mood" required>
+      <select id="mood" name="mood" required>
         <option value="😡 Angry">😡 Angry</option>
         <option value="😢 Sad">😢 Sad</option>
         <option value="😐 Meh">😐 Meh</option>
@@ -81,14 +81,14 @@
       </select>
 
       <label for="complaint">What’s bothering you?</label>
-      <textarea id="complaint" rows="4" required></textarea>
+      <textarea id="complaint" name="complaint" rows="4" required></textarea>
 
       <label for="severity">Severity 🔥</label>
-      <input type="range" id="severity" min="1" max="10" value="5" />
+      <input type="range" id="severity" name="severity" min="1" max="10" value="5" />
       <div class="slider-value">5 / 10</div>
 
       <label for="solution">Suggested Compensation 💸</label>
-      <input type="text" id="solution" placeholder="e.g., Buy me chocolate" />
+      <input type="text" id="solution" name="solution" placeholder="e.g., Buy me chocolate" />
 
       <button type="submit">Submit Complaint</button>
     </form>
@@ -97,39 +97,38 @@
     </div>
   </div>
 
- <script>
-  const form = document.getElementById("grievanceForm");
-  const success = document.getElementById("successMessage");
-  const slider = document.getElementById("severity");
-  const sliderValue = document.querySelector(".slider-value");
+  <script>
+    const form = document.getElementById("grievanceForm");
+    const success = document.getElementById("successMessage");
+    const slider = document.getElementById("severity");
+    const sliderValue = document.querySelector(".slider-value");
 
-  slider.addEventListener("input", () => {
-    sliderValue.textContent = `${slider.value} / 10`;
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-
-    fetch("https://script.google.com/macros/s/AKfycbwduNA4wxKyZZLC21zYQyq8q9bynjVF7LlYiJT1zUDwGoffOkX2Lyo11f_s4tteBF0p/exec", {
-      method: "POST",
-      body: formData,
-    })
-    .then(() => {
-      form.reset();
-      sliderValue.textContent = "5 / 10";
-      success.style.display = "block";
-      setTimeout(() => {
-        success.style.display = "none";
-      }, 5000);
-    })
-    .catch((error) => {
-      alert("Oops! Something went wrong.");
-      console.error(error);
+    slider.addEventListener("input", () => {
+      sliderValue.textContent = `${slider.value} / 10`;
     });
-  });
-</script>
 
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      fetch("https://script.google.com/macros/s/AKfycbwduNA4wxKyZZLC21zYQyq8q9bynjVF7LlYiJT1zUDwGoffOkX2Lyo11f_s4tteBF0p/exec", {
+        method: "POST",
+        body: formData,
+      })
+      .then(() => {
+        form.reset();
+        sliderValue.textContent = "5 / 10";
+        success.style.display = "block";
+        setTimeout(() => {
+          success.style.display = "none";
+        }, 5000);
+      })
+      .catch((error) => {
+        alert("Oops! Something went wrong.");
+        console.error(error);
+      });
+    });
+  </script>
 </body>
 </html>
