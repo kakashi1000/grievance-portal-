@@ -108,27 +108,33 @@
     });
 
     form.addEventListener("submit", (e) => {
-      e.preventDefault();
+  e.preventDefault();
 
-      const formData = new FormData(form);
+  const data = {
+    mood: form.mood.value,
+    complaint: form.complaint.value,
+    severity: form.severity.value,
+    solution: form.solution.value,
+  };
 
-      fetch("https://script.google.com/macros/s/AKfycbwduNA4wxKyZZLC21zYQyq8q9bynjVF7LlYiJT1zUDwGoffOkX2Lyo11f_s4tteBF0p/exec", {
-        method: "POST",
-        body: formData,
-      })
-      .then(() => {
-        form.reset();
-        sliderValue.textContent = "5 / 10";
-        success.style.display = "block";
-        setTimeout(() => {
-          success.style.display = "none";
-        }, 5000);
-      })
-      .catch((error) => {
-        alert("Oops! Something went wrong.");
-        console.error(error);
-      });
-    });
+  fetch("https://script.google.com/macros/s/AKfycbz2MhRag2KwKtaiGRymA5-FN3PURk9CfltZPqsdIriC0hLBC_hx8jW4pcxZcrFaUpYF/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: encodeURIComponent(JSON.stringify(data)),
+  })
+  .then(() => {
+    form.reset();
+    sliderValue.textContent = "5 / 10";
+    success.style.display = "block";
+    setTimeout(() => {
+      success.style.display = "none";
+    }, 5000);
+  })
+  .catch((error) => {
+    alert("Oops! Something went wrong.");
+    console.error(error);
+  });
+});
   </script>
 </body>
 </html>
