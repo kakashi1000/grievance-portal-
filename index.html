@@ -111,22 +111,22 @@ slider.addEventListener("input", () => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form);  // Create FormData from the form
+  const formData = new FormData(form);
 
-  fetch("https://script.google.com/macros/s/AKfycbwDeYlY3M_LalyOTtOPTgV2HcteRlnOdo8BHhUJUNZjDrdfjJa6JF59AyheozS8pmwJ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwduNA4wxKyZZLC21zYQyq8q9bynjVF7LlYiJT1zUDwGoffOkX2Lyo11f_s4tteBF0p/exec", {
     method: "POST",
-    mode: "no-cors",  // Keep no-cors to avoid CORS blocking (response won't be readable though)
-    body: formData    // Send form data, NOT JSON
+    body: formData,
+  }).then(() => {
+    form.reset();
+    sliderValue.textContent = "5 / 10";
+    success.style.display = "block";
+    setTimeout(() => {
+      success.style.display = "none";
+    }, 5000);
+  }).catch((error) => {
+    alert("Oops! Something went wrong.");
+    console.error(error);
   });
-
-  // Show success message assuming it worked
-  form.reset();
-  sliderValue.textContent = "5 / 10";
-  success.style.display = "block";
-  setTimeout(() => {
-    success.style.display = "none";
-  }, 5000);
-});
   </script>
 </body>
 </html>
