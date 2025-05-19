@@ -81,61 +81,48 @@
   </select>
 
   <label for="complaint">What’s bothering you?</label>
-  <textarea id="complaint" name="complaint" rows="4" required></textarea>
+  <textarea id="complaint" name="complaint" required></textarea>
 
   <label for="severity">Severity 🔥</label>
   <input type="range" id="severity" name="severity" min="1" max="10" value="5" />
-  <div class="slider-value">5 / 10</div>
 
   <label for="solution">Suggested Compensation 💸</label>
-  <input type="text" id="solution" name="solution" placeholder="e.g., Buy me chocolate" />
+  <input type="text" id="solution" name="solution" />
 
   <button type="submit">Submit Complaint</button>
 </form>
+
     
     <div class="success" id="successMessage">
       💌 Your grievance has been sent to Changu. He is now emotionally processing it.
     </div>
   </div>
 
-  <script>
-    const form = document.getElementById("grievanceForm");
-    const success = document.getElementById("successMessage");
-    const slider = document.getElementById("severity");
-    const sliderValue = document.querySelector(".slider-value");
+ <script>
+  const form = document.getElementById("grievanceForm");
 
-    slider.addEventListener("input", () => {
-      sliderValue.textContent = `${slider.value} / 10`;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = new URLSearchParams(new FormData(form));
+
+    fetch("https://script.google.com/macros/s/AKfycbz2MhRag2KwKtaiGRymA5-FN3PURk9CfltZPqsdIriC0hLBC_hx8jW4pcxZcrFaUpYF/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: data.toString(),
+    })
+    .then(() => {
+      alert("Grievance sent successfully!");
+      form.reset();
+    })
+    .catch((error) => {
+      alert("Something went wrong.");
+      console.error(error);
     });
-
-    form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const data = {
-    mood: form.mood.value,
-    complaint: form.complaint.value,
-    severity: form.severity.value,
-    solution: form.solution.value,
-  };
-
-  fetch("https://script.google.com/macros/s/AKfycbwDsE73gqNOIxTI9tA6vldJ6j7-JAwAvfzzAlbGFTdOB8JH2c-QqGZl2BZasr96aEwP/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: encodeURIComponent(JSON.stringify(data)),
-  })
-  .then(() => {
-    form.reset();
-    sliderValue.textContent = "5 / 10";
-    success.style.display = "block";
-    setTimeout(() => {
-      success.style.display = "none";
-    }, 5000);
-  })
-  .catch((error) => {
-    alert("Oops! Something went wrong.");
-    console.error(error);
   });
-});
-  </script>
+</script>
+
 </body>
 </html>
