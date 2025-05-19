@@ -113,18 +113,20 @@
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      fetch("https://script.google.com/macros/s/AKfycbzb9QHNcLNcYa49OUxdVHIog6w8Lo7vlcm4ydfeB6CoBU8vVXIaCxwxJ36JcRpi3x25/exec", {
-        method: "POST",
-       headers: {
-          "Content-Type": "application/json"
-             },
-        body: JSON.stringify({
-          mood: document.getElementById("mood").value,
-          complaint: document.getElementById("complaint").value,
-          severity: document.getElementById("severity").value,
-          solution: document.getElementById("solution").value
-        })
-      })
+      fetch("https://script.google.com/macros/s/AKfycbxVb2qBl2CCaCSINnGBtGCqds2F27-2jdqhc9pDK_QP_tMp4Fboa5uHzyUoPdSKe1ES/exec", {
+  method: "POST",
+  mode: "no-cors",
+  body: JSON.stringify({
+    mood: document.getElementById("mood").value,
+    complaint: document.getElementById("complaint").value,
+    severity: document.getElementById("severity").value,
+    solution: document.getElementById("solution").value
+  }),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+
         .then(() => {
         form.reset();
         sliderValue.textContent = "5 / 10";
